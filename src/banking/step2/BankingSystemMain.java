@@ -17,6 +17,7 @@ public class BankingSystemMain {
 	}
 	
 	//github 연동
+	//연동완료 후 커밋&푸시
 	public static void main(String[] args) {
 		
 		AccountManager manager = new AccountManager(50);
