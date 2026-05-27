@@ -3,6 +3,9 @@ package banking.step4;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.Scanner;
+
+import skillup.project07.Friend;
 
 public class AccountManager {
 	
@@ -61,7 +64,10 @@ public class AccountManager {
 
 		System.out.print("계좌번호:");
 		String accNum = BankingSystemMain.sc.nextLine();
-
+		boolean isFind = false;
+		
+		//이터레이터 인스턴스 생성
+		Iterator<Friend> itr = myFriends.iterator();
 		System.out.print("입금액:");
 		try {
 			int money = BankingSystemMain.sc.nextInt();
@@ -74,7 +80,7 @@ public class AccountManager {
 			if(money % 500 !=0) {
 				throw new MenuSelectException("500원 단위로만 입금가능");
 			}
-			(accounts.contains(accNum) ? true : false)
+			
 	
 					System.out.println("입금이 완료되었습니다.");
 					return;

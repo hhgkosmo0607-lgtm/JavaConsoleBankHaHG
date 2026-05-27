@@ -8,7 +8,7 @@ public class BankingSystemMain implements ICustomDefine {
 	public static Scanner sc = new Scanner(System.in);
 	
 	public static void showMenu() {
-		System.out.println("ver05");
+		System.out.println("ver04");
 		System.out.println("-----Menu------");
 		System.out.println("1.계좌계설");
 		System.out.println("2.입금");
@@ -29,7 +29,7 @@ public class BankingSystemMain implements ICustomDefine {
 			try {
 				showMenu();
 				int sel = sc.nextInt();
-				if(sel < 1 || sel >5) {
+				if(sel < 1 || sel >6) {
 					throw new MenuSelectException("1~5까지의 숫자만 입력하세요");
 				}
 				sc.nextLine();
