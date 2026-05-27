@@ -1,4 +1,4 @@
-package banking.step3;
+package banking.step4;
 
 public interface ICustomDefine {
 
@@ -8,4 +8,9 @@ public interface ICustomDefine {
 	    int INQUIRE = 4;
 	    int DELETE = 5;
 	    int EXIT = 6;
+	    
+	    int A = 7;
+	    int B = 4;
+	    int C = 2;
+	    
 }
