@@ -9,13 +9,13 @@ public class HighCreditAccount extends Account{
 		super(accountNumber, name, money, normalRate);
 		this.creditRating = creditRating;
 		if(creditRating.equalsIgnoreCase("A")) {
-			highRate = A;
+			highRate = ICustomDefine.A;
 		}
 		else if(creditRating.equalsIgnoreCase("B")) {
-			highRate = B;
+			highRate = ICustomDefine.B;
 		}
 		else if(creditRating.equalsIgnoreCase("C")) {
-			highRate = C;
+			highRate = ICustomDefine.C;
 		}
 	}
 	

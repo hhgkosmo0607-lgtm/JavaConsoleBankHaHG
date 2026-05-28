@@ -3,7 +3,7 @@ package banking.step4;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class BankingSystemMain implements ICustomDefine {
+public class BankingSystemMain {
 	
 	public static Scanner sc = new Scanner(System.in);
 	
@@ -34,7 +34,7 @@ public class BankingSystemMain implements ICustomDefine {
 				}
 				sc.nextLine();
 				switch(sel) {
-				case MAKE:
+				case ICustomDefine.MAKE:
 					System.out.println("-----계좌선택-----");
 					System.out.println("1.보통계좌");
 					System.out.println("2.신용신뢰계좌");
@@ -49,19 +49,19 @@ public class BankingSystemMain implements ICustomDefine {
 						break;
 					}
 					break;
-				case DEPOSIT:
+				case ICustomDefine.DEPOSIT:
 					manager.depositMoney();
 					break;
-				case WITHDRAW:
+				case ICustomDefine.WITHDRAW:
 					manager.withdrawMoney();
 					break;
-				case INQUIRE:
+				case ICustomDefine.INQUIRE:
 					manager.showAccInfo();
 					break;
-				case DELETE:
+				case ICustomDefine.DELETE:
 					manager.deleteAccount();
 					break;
-				case EXIT:
+				case ICustomDefine.EXIT:
 					System.out.println("프로그램종료");
 					return;
 				

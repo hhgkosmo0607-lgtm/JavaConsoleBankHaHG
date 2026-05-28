@@ -1,6 +1,6 @@
 package banking.step4;
 
-public class Account implements ICustomDefine {
+public class Account {
 	
 	private String accountNumber;
 	private String name;
