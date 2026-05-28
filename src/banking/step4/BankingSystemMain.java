@@ -60,6 +60,7 @@ public class BankingSystemMain implements ICustomDefine {
 					break;
 				case DELETE:
 					manager.deleteAccount();
+					break;
 				case EXIT:
 					System.out.println("프로그램종료");
 					return;

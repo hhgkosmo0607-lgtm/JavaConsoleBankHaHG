@@ -24,7 +24,6 @@ public class HighCreditAccount extends Account{
 	 */
 	@Override
 	public void deposit(int amount) {
-		System.out.println("현재 highRate=" + highRate);
 		int balance = getMoney();
 
 		balance = balance

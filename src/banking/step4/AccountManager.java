@@ -2,10 +2,9 @@ package banking.step4;
 
 import java.util.HashSet;
 import java.util.InputMismatchException;
-import java.util.Iterator;
-import java.util.Scanner;
 
-import skillup.project07.Friend;
+import javax.naming.directory.SearchControls;
+
 
 public class AccountManager {
 	
@@ -24,8 +23,30 @@ public class AccountManager {
 		int normalRate;
 		
 		System.out.println("***신규계좌개설***");
+		/*
+		 자 계좌번호 입력받고
+		 원래 있던 계좌 쫙 돌리고 검색하고
+		 y or n 에 따른 기능 만들면 될듯?
+		 덮어쓴다는게 뭘까..
+		 지우고 새로 생성과 같은거 아닐까
+		 그러면 지우는걸 먼저 만들자
+		 자 다음
+		 계좌번호 13자리수로 정해놓고 나머지는 다 오류로 처리해보자
+		 문자입력시에는 숫자로 입력하세요 추가
+		 아니 잠만 그러면 하나하나에 다 저 if를 달아야함? 한때 못하나
+		 */
 		System.out.println("계좌번호: ");
 		accountNumber = BankingSystemMain.sc.nextLine();
+		Account findAcc = searchAccount(accountNumber);
+		if(findAcc != null) {
+			System.out.println("중복계좌발견됨. 덮어쓸까요?(y or n)");
+			String answer = BankingSystemMain.sc.nextLine();
+			if(answer.equalsIgnoreCase("y")) {
+				accounts.remove(findAcc);
+			}else if(answer.equalsIgnoreCase("n")){
+				return;
+			}
+		}
 		System.out.println("이름: ");
 		name = BankingSystemMain.sc.nextLine();
 		System.out.println("잔액: ");
@@ -52,56 +73,66 @@ public class AccountManager {
 	}
 	
 	/*
-	문자입력 불가는 예외처리로 하고
-	if money가 음수면 불가
-	나누기 500일 때 0인것만 입금 가능
-	일탠데 그걸 어캐 집어넣는데..
+	자 컬렉션을 돌려서 검색하고 일치하면 입금
+	나머지는 뭐 그대로
+	근데 어캐하는건데
+	근데 순서가 계좌번호 비교가 먼저되야되지 않나
+	검색 메소드를 따로 빼놓고 불러와서 사용하기만 
 	 */
+	public Account searchAccount(String accNum) {
+
+	    for(Account acc : accounts) {
+
+	        if(acc.getAccNum().equals(accNum)) {
+	            return acc;
+	        }
+	    }
+
+	    return null;
+	}
+	
 	public void depositMoney() throws MenuSelectException {
 
-		System.out.println("***입 금***");
-		System.out.println("계좌번호와 입금할 금액을 입력하세요");
+	    System.out.println("***입 금***");
 
-		System.out.print("계좌번호:");
-		String accNum = BankingSystemMain.sc.nextLine();
-		boolean isFind = false;
-		
-		//이터레이터 인스턴스 생성
-		Iterator<Friend> itr = myFriends.iterator();
-		System.out.print("입금액:");
-		try {
-			int money = BankingSystemMain.sc.nextInt();
-			BankingSystemMain.sc.nextLine();
-			
-			if(money <= 0) {
-			    throw new MenuSelectException("0원 이하는 입금 불가");
-			}
-			
-			if(money % 500 !=0) {
-				throw new MenuSelectException("500원 단위로만 입금가능");
-			}
-			
-	
-					System.out.println("입금이 완료되었습니다.");
-					return;
-				}
-			}
-			 // 계좌 못 찾은 경우
+	    System.out.print("계좌번호:");
+	    String accNum = BankingSystemMain.sc.nextLine();
+
+	    Account findAcc = searchAccount(accNum);
+
+	    if(findAcc == null) {
 	        throw new MenuSelectException("계좌가 없습니다.");
+	    }
+
+	    System.out.print("입금액:");
+
+	    try {
+	        int money = BankingSystemMain.sc.nextInt();
+	        BankingSystemMain.sc.nextLine();
+
+	        if(money <= 0) {
+	            throw new MenuSelectException("0원 이하는 입금 불가");
+	        }
+
+	        if(money % 500 != 0) {
+	            throw new MenuSelectException("500원 단위만 입금 가능");
+	        }
+
+	        findAcc.deposit(money);
+
+	        System.out.println("입금 완료");
 	    }
 	    catch(InputMismatchException e) {
 
 	        BankingSystemMain.sc.nextLine();
+
 	        throw new MenuSelectException("숫자만 입력하세요.");
 	    }
-		
 	}
 	
 	/*
-	money가 0이하면 노출금
-	잔고와 출금액 비교
-	% 1000 != 0
-	
+	입금과 동일한데 Account에서 money를 받아오는것만 추가하면되는데
+	컬렉션으로 어캐하는데
 	 */
 	public void withdrawMoney() throws MenuSelectException{
 
@@ -109,6 +140,11 @@ public class AccountManager {
 
 	    System.out.print("계좌번호:");
 	    String accNum = BankingSystemMain.sc.nextLine();
+	    
+	    Account findAcc = searchAccount(accNum);
+	    if(findAcc == null) { 
+	    	throw new MenuSelectException("계좌가 없습니다.");
+	    }
 
 	    System.out.print("출금액:");
 
@@ -124,43 +160,32 @@ public class AccountManager {
 	        	throw new MenuSelectException("1000원 단위만 출금 가능");
 	        }
 
-	        for(int i = 0; i < numOfaccounts; i++) {
+	        int balance = findAcc.getMoney();
 
-	            if(accounts[i].getAccNum().equals(accNum)) {
+	        if(balance < money) {
 
-	                int balance = accounts[i].getMoney();
+	        	System.out.println("잔고가 부족합니다.");
+	        	System.out.println("금액전체를 출금할까요?");
+	        	System.out.print("YES/NO:");
 
-	                if(balance < money) {
+	        	String answer = BankingSystemMain.sc.nextLine();
 
-	                    System.out.println("잔고가 부족합니다.");
-	                    System.out.println("금액전체를 출금할까요?");
-	                    System.out.print("YES/NO:");
-
-	                    String answer = BankingSystemMain.sc.nextLine();
-
-	                    if(answer.equalsIgnoreCase("YES")) {
-
-	                        accounts[i].withdraw(balance);
-
-	                        System.out.println("전체금액 출금완료");
-	                    }
-	                    else {
+	        	if(answer.equalsIgnoreCase("YES")) {
+	        	findAcc.withdraw(balance);
+	        	System.out.println("전체금액 출금완료");
+	            	}
+	        		else {
 	                        System.out.println("출금 취소");
 	                    }
 
-	                    return;
-	                }
+	            	return;
+	        	}
 
-	                accounts[i].withdraw(money);
-
-	                System.out.println("출금 완료");
-	                return;
-	            }
-	        }
-
-	        throw new MenuSelectException("계좌가 없습니다.");
-	    }
-	    catch(InputMismatchException e) {
+	        findAcc.withdraw(money);
+	        System.out.println("출금 완료");
+	        return;
+	     
+	    	}catch(InputMismatchException e) {
 
 	        BankingSystemMain.sc.nextLine();
 	        throw new MenuSelectException("숫자만 입력하세요.");
@@ -182,10 +207,17 @@ public class AccountManager {
 		System.out.println("전체계좌정보 출력이 완료되었습니다.");
 	}
 	
+	//삭제하라
 	public void deleteAccount() {
-		
-		
-		
-	
+		System.out.println("계좌번호를 입력해주세요");
+		String accNum = BankingSystemMain.sc.nextLine();
+		Account findAcc = searchAccount(accNum);
+		if(findAcc == null) {
+			System.out.println("존재하지 않는 계좌번호입니다");
+		}
+		else {
+			System.out.println("삭제합니다");
+			accounts.remove(findAcc);
+		}
 	}
 }
