@@ -8,13 +8,13 @@ public class HighCreditAccount extends Account{
 			String creditRating) {
 		super(accountNumber, name, money, normalRate);
 		this.creditRating = creditRating;
-		if(creditRating.equals("A")) {
+		if(creditRating.equalsIgnoreCase("A")) {
 			highRate = A;
 		}
-		else if(creditRating.equals("B")) {
+		else if(creditRating.equalsIgnoreCase("B")) {
 			highRate = B;
 		}
-		else if(creditRating.equals("C")) {
+		else if(creditRating.equalsIgnoreCase("C")) {
 			highRate = C;
 		}
 	}

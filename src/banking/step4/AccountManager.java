@@ -3,8 +3,6 @@ package banking.step4;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 
-import javax.naming.directory.SearchControls;
-
 
 public class AccountManager {
 	
@@ -30,20 +28,26 @@ public class AccountManager {
 		 덮어쓴다는게 뭘까..
 		 지우고 새로 생성과 같은거 아닐까
 		 그러면 지우는걸 먼저 만들자
+		 어쩌다보니 했는데 return을 저렇게 쓰는게 맞나
+		 그냥 허전하니 쓰긴 했는데
 		 자 다음
 		 계좌번호 13자리수로 정해놓고 나머지는 다 오류로 처리해보자
+		 근데 자리수를 어캐 정함? 모르겠다 다음기회에
 		 문자입력시에는 숫자로 입력하세요 추가
-		 아니 잠만 그러면 하나하나에 다 저 if를 달아야함? 한때 못하나
+		 아니 잠만 그러면 하나하나에 다 저 if를 달아야함? 한번에 못하나
 		 */
 		System.out.println("계좌번호: ");
 		accountNumber = BankingSystemMain.sc.nextLine();
 		Account findAcc = searchAccount(accountNumber);
 		if(findAcc != null) {
-			System.out.println("중복계좌발견됨. 덮어쓸까요?(y or n)");
+			System.out.println("중복계좌발견됨. 덮어쓸까요?(Y or N)");
 			String answer = BankingSystemMain.sc.nextLine();
 			if(answer.equalsIgnoreCase("y")) {
 				accounts.remove(findAcc);
 			}else if(answer.equalsIgnoreCase("n")){
+				return;
+			}else {
+				System.out.println("잘못된 입력입니다.");
 				return;
 			}
 		}
@@ -126,7 +130,8 @@ public class AccountManager {
 
 	        BankingSystemMain.sc.nextLine();
 
-	        throw new MenuSelectException("숫자만 입력하세요.");
+	        System.out.println("숫자만 입력하세요.");
+	        return;
 	    }
 	}
 	
@@ -188,7 +193,7 @@ public class AccountManager {
 	    	}catch(InputMismatchException e) {
 
 	        BankingSystemMain.sc.nextLine();
-	        throw new MenuSelectException("숫자만 입력하세요.");
+	        System.out.println("숫자만 입력하세요");
 	    }
 	}
 	
