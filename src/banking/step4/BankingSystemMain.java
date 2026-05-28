@@ -30,7 +30,7 @@ public class BankingSystemMain implements ICustomDefine {
 				showMenu();
 				int sel = sc.nextInt();
 				if(sel < 1 || sel >6) {
-					throw new MenuSelectException("1~5까지의 숫자만 입력하세요");
+					throw new MenuSelectException("1~6까지의 숫자만 입력하세요");
 				}
 				sc.nextLine();
 				switch(sel) {

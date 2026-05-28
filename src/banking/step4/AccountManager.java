@@ -38,19 +38,20 @@ public class AccountManager {
 		 */
 		System.out.println("계좌번호: ");
 		accountNumber = BankingSystemMain.sc.nextLine();
-		Account findAcc = searchAccount(accountNumber);
-		if(findAcc != null) {
-			System.out.println("중복계좌발견됨. 덮어쓸까요?(Y or N)");
-			String answer = BankingSystemMain.sc.nextLine();
-			if(answer.equalsIgnoreCase("y")) {
-				accounts.remove(findAcc);
-			}else if(answer.equalsIgnoreCase("n")){
-				return;
-			}else {
-				System.out.println("잘못된 입력입니다.");
-				return;
-			}
-		}
+		
+//		Account findAcc = searchAccount(accountNumber);
+//		if(findAcc != null) {
+//			System.out.println("중복계좌발견됨. 덮어쓸까요?(Y or N)");
+//			String answer = BankingSystemMain.sc.nextLine();
+//			if(answer.equalsIgnoreCase("y")) {
+//				accounts.remove(findAcc);
+//			}else if(answer.equalsIgnoreCase("n")){
+//				return;
+//			}else {
+//				System.out.println("잘못된 입력입니다.");
+//				return;
+//			}
+//		}
 		System.out.println("이름: ");
 		name = BankingSystemMain.sc.nextLine();
 		System.out.println("잔액: ");
@@ -72,6 +73,9 @@ public class AccountManager {
 			accounts.add(high);
 		}
 		System.out.println("계좌개설이 완료되었습니다");
+		
+		
+		
 		
 		
 	}

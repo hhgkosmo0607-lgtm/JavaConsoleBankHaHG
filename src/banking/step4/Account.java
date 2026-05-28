@@ -54,4 +54,6 @@ public class Account implements ICustomDefine {
 	public void withdraw(int amount) {
 		money -= amount;
 	}
+	
+	
 }
