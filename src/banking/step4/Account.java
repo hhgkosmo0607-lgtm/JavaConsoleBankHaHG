@@ -55,5 +55,15 @@ public class Account {
 		money -= amount;
 	}
 	
+	@Override
+	public int hashCode() {
+		return accountNumber.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Account accObj = (Account)obj;
+		return(accountNumber.equals(accObj.accountNumber));
+	}
 	
 }

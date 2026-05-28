@@ -16,68 +16,46 @@ public class AccountManager {
 	 입력받고 저장
 	 */
 	public void makeAccount(int sub) {
-		String accountNumber, name, creditRating;
-		int money;
-		int normalRate;
-		
-		System.out.println("***신규계좌개설***");
-		/*
-		 자 계좌번호 입력받고
-		 원래 있던 계좌 쫙 돌리고 검색하고
-		 y or n 에 따른 기능 만들면 될듯?
-		 덮어쓴다는게 뭘까..
-		 지우고 새로 생성과 같은거 아닐까
-		 그러면 지우는걸 먼저 만들자
-		 어쩌다보니 했는데 return을 저렇게 쓰는게 맞나
-		 그냥 허전하니 쓰긴 했는데
-		 자 다음
-		 계좌번호 13자리수로 정해놓고 나머지는 다 오류로 처리해보자
-		 근데 자리수를 어캐 정함? 모르겠다 다음기회에
-		 문자입력시에는 숫자로 입력하세요 추가
-		 아니 잠만 그러면 하나하나에 다 저 if를 달아야함? 한번에 못하나
-		 */
-		System.out.println("계좌번호: ");
-		accountNumber = BankingSystemMain.sc.nextLine();
-		
-//		Account findAcc = searchAccount(accountNumber);
-//		if(findAcc != null) {
-//			System.out.println("중복계좌발견됨. 덮어쓸까요?(Y or N)");
-//			String answer = BankingSystemMain.sc.nextLine();
-//			if(answer.equalsIgnoreCase("y")) {
-//				accounts.remove(findAcc);
-//			}else if(answer.equalsIgnoreCase("n")){
-//				return;
-//			}else {
-//				System.out.println("잘못된 입력입니다.");
-//				return;
-//			}
-//		}
-		System.out.println("이름: ");
-		name = BankingSystemMain.sc.nextLine();
-		System.out.println("잔액: ");
-		money = BankingSystemMain.sc.nextInt();
-		System.out.println("기본이자%(정수형태로입력):"  );
-		normalRate = BankingSystemMain.sc.nextInt();
-		BankingSystemMain.sc.nextLine(); 
-		
-		if(sub == 1) {
-			NormalAccount normal = new NormalAccount(accountNumber, name, money, normalRate);
-			accounts.add(normal);
-		}
-		
-		else if(sub == 2) {
-			System.out.println("신용등급(A,B,C등급):" );
-			creditRating = BankingSystemMain.sc.nextLine();
-			HighCreditAccount high = new HighCreditAccount
-					(accountNumber, name, money, normalRate, creditRating);
-			accounts.add(high);
-		}
-		System.out.println("계좌개설이 완료되었습니다");
-		
-		
-		
-		
-		
+	    String accountNumber, name, creditRating;
+	    int money;
+	    int normalRate;
+	    System.out.println("***신규계좌개설***");
+	    System.out.println("계좌번호:");
+	    accountNumber = BankingSystemMain.sc.nextLine();
+	    System.out.println("이름:");
+	    name = BankingSystemMain.sc.nextLine();
+	    System.out.println("잔액:");
+	    money = BankingSystemMain.sc.nextInt();
+	    System.out.println("기본이자%(정수형태로입력):");
+	    normalRate = BankingSystemMain.sc.nextInt();
+	    BankingSystemMain.sc.nextLine();
+	    Account newAccount = null;
+	    if(sub == 1) {
+	        newAccount =
+	                new NormalAccount(accountNumber,
+	                        name, money, normalRate);
+	    }
+	    else if(sub == 2) {
+	        System.out.println("신용등급(A,B,C등급):");
+	        creditRating = BankingSystemMain.sc.nextLine();
+	        newAccount =
+	                new HighCreditAccount(accountNumber,
+	                        name, money, normalRate, creditRating);
+	    }
+	    boolean addYN = accounts.add(newAccount);
+	    if(addYN == false) {
+	        System.out.println("중복계좌발견됨.덮어쓸까요?(Y or N)");
+	        String answer = BankingSystemMain.sc.nextLine();
+	        if(answer.equalsIgnoreCase("Y")) {
+	            accounts.remove(newAccount);
+	            accounts.add(newAccount);
+	        }
+	        else if(answer.equalsIgnoreCase("N")) {
+	            System.out.println("계좌생성을 취소합니다.");
+	            return;
+	        }
+	    }
+	    System.out.println("계좌개설이 완료되었습니다");
 	}
 	
 	/*
@@ -102,26 +80,19 @@ public class AccountManager {
 	public void depositMoney() throws MenuSelectException {
 
 	    System.out.println("***입 금***");
-
 	    System.out.print("계좌번호:");
 	    String accNum = BankingSystemMain.sc.nextLine();
-
 	    Account findAcc = searchAccount(accNum);
-
 	    if(findAcc == null) {
 	        throw new MenuSelectException("계좌가 없습니다.");
 	    }
-
 	    System.out.print("입금액:");
-
 	    try {
 	        int money = BankingSystemMain.sc.nextInt();
 	        BankingSystemMain.sc.nextLine();
-
 	        if(money <= 0) {
 	            throw new MenuSelectException("0원 이하는 입금 불가");
 	        }
-
 	        if(money % 500 != 0) {
 	            throw new MenuSelectException("500원 단위만 입금 가능");
 	        }
