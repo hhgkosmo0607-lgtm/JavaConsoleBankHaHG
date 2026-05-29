@@ -21,6 +21,7 @@ public class BankingSystemMain {
 	//github 연동
 	//연동완료 후 커밋&푸시
 	//학원에서 pull없이 작업함
+	//github clone 작업 성공
 	public static void main(String[] args) {
 		
 		AccountManager manager = new AccountManager(50);
