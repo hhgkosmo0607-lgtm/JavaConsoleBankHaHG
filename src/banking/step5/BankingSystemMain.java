@@ -22,6 +22,7 @@ public class BankingSystemMain {
 	//2연동완료 후 커밋&푸시
 	//3학원에서 pull없이 작업함
 	//4github clone 작업 성공
+	//5커밋 푸시 클론 성공 그리고 졸림
 	public static void main(String[] args) {
 		
 		AccountManager manager = new AccountManager(50);
