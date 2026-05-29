@@ -8,7 +8,7 @@ public class BankingSystemMain {
 	public static Scanner sc = new Scanner(System.in);
 	
 	public static void showMenu() {
-		System.out.println("ver04");
+		System.out.println("ver05");
 		System.out.println("-----Menu------");
 		System.out.println("1.계좌계설");
 		System.out.println("2.입금");
@@ -20,6 +20,7 @@ public class BankingSystemMain {
 	
 	//github 연동
 	//연동완료 후 커밋&푸시
+	//학원에서 pull없이 작업함
 	public static void main(String[] args) {
 		
 		AccountManager manager = new AccountManager(50);
