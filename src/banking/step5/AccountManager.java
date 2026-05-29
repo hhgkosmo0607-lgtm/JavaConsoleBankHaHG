@@ -1,5 +1,11 @@
 package banking.step5;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 
@@ -202,5 +208,33 @@ public class AccountManager {
 	}
 	
 	//저장하라
+	public void saveAccountInfo() {
+		try {
+			ObjectOutputStream save = new ObjectOutputStream(
+				new FileOutputStream("src/banking/step5/AccountManager.obj"));
+			save.writeObject(accounts);
+			save.close();
+			System.out.println("저장완료");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//불러오라
+	public void loadAccountInfo() {
+		try {
+			ObjectInputStream load = new ObjectInputStream(
+					new FileInputStream("src/banking/step5/AccountManager.obj"));
+			accounts = (HashSet<Account>)load.readObject();
+			load.close();
+			System.out.println("불러오기완료");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			System.out.println("저장된파일이 없습니다.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

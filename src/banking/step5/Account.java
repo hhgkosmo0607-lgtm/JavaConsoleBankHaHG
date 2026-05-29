@@ -1,6 +1,8 @@
 package banking.step5;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable{
 	
 	private String accountNumber;
 	private String name;

@@ -26,7 +26,7 @@ public class BankingSystemMain {
 	public static void main(String[] args) {
 		
 		AccountManager manager = new AccountManager(50);
-		
+		manager.loadAccountInfo();
 		while(true) {
 			
 			try {
@@ -66,6 +66,7 @@ public class BankingSystemMain {
 					break;
 				case ICustomDefine.EXIT:
 					System.out.println("프로그램종료");
+					manager.saveAccountInfo();
 					return;
 				
 				}
