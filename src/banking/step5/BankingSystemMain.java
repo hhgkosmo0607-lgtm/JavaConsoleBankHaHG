@@ -18,10 +18,10 @@ public class BankingSystemMain {
 		System.out.println("6.프로그램종료");
 	}
 	
-	//github 연동
-	//연동완료 후 커밋&푸시
-	//학원에서 pull없이 작업함
-	//github clone 작업 성공
+	//1github 연동
+	//2연동완료 후 커밋&푸시
+	//3학원에서 pull없이 작업함
+	//4github clone 작업 성공
 	public static void main(String[] args) {
 		
 		AccountManager manager = new AccountManager(50);
